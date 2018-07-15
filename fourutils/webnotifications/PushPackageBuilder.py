@@ -51,14 +51,18 @@ class PushPackageBuilder(object):
                     nim.save(nim_f, format='png')
                     self.images[f'icon_{sizecat}x{sizecat}@2x.png'] = nim_f.getvalue()
 
-    def build_zip(self, zf):
+    def build_zip(self, zf, auth_token=None):
         manifest = {}
         for path, data in self.images.items():
             full_path = os.path.join('icon.iconset/', path)
             zf.writestr(full_path, data)
             manifest[full_path] = self.get_hash_details(data)
 
-        website_data = json.dumps(self.website_dict).encode()
+        website_data = json.dumps({
+            **self.website_dict,
+            'authenticationToken': auth_token or \
+                self.website_dict.get('authenticationToken')
+        }).encode()
         zf.writestr('website.json', website_data)
         manifest['website.json'] = self.get_hash_details(website_data)
 
