@@ -51,18 +51,14 @@ class PushPackageBuilder(object):
                     nim.save(nim_f, format='png')
                     self.images[f'icon_{sizecat}x{sizecat}@2x.png'] = nim_f.getvalue()
 
-    def build_zip(self, zf, auth_token=None):
+    def build_zip(self, zf, website_dict):
         manifest = {}
         for path, data in self.images.items():
             full_path = os.path.join('icon.iconset/', path)
             zf.writestr(full_path, data)
             manifest[full_path] = self.get_hash_details(data)
 
-        website_data = json.dumps({
-            **self.website_dict,
-            'authenticationToken': auth_token or \
-                self.website_dict.get('authenticationToken')
-        }).encode()
+        website_data = json.dumps(website_dict).encode()
         zf.writestr('website.json', website_data)
         manifest['website.json'] = self.get_hash_details(website_data)
 
@@ -72,13 +68,16 @@ class PushPackageBuilder(object):
 
         zf.writestr('signature', self.sign_manifest(manifest_data))
 
-    def build_pushpackage(self, output_file=None):
+    def build_pushpackage(self, output_file=None, merge_website_dict={}):
         start_time = time.time()
         output_file = output_file or BytesIO()
 
         with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as zf:
             self.log.debug('Building new zip in %s', zf)
-            self.build_zip(zf)
+            self.build_zip(zf, website_dict={
+                **self.website_dict,
+                **merge_website_dict
+            })
 
         took = time.time() - start_time
         self.log.debug('Took %sms', round(took*1000))

@@ -31,7 +31,9 @@ with open(outfile, 'wb') as f:
             "urlFormatString": 'https://127.0.0.1/%@/%@',
             "webServiceURL": 'https://127.0.0.1/api/apn'
         })
-    ppb.build_pushpackage(f, auth_token='123456789')
+    ppb.build_pushpackage(f, merge_website_dict={
+        'authenticationToken': '123456789'
+    })
 log.info('Finished generating pushpackage in %s', outfile)
 ```
 
