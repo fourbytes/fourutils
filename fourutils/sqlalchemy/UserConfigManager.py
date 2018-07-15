@@ -2,12 +2,18 @@ import logging
 from typing import Optional
 from functools import wraps
 
-from flask import request, has_app_context
 import termcolor
 import msgpack
 from sqlalchemy.exc import SQLAlchemyError, ProgrammingError
 
 from ..log import make_logger
+
+try:
+    from flask import request, has_app_context
+except ImportError:
+    request = None
+    def has_app_context():
+        return False
 
 
 def teardown_db(f):
