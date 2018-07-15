@@ -1,5 +1,6 @@
 # Python Internal
 __pycache__
+*.pyc
 
 # Package Building
 dist/
