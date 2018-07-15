@@ -1,6 +1,6 @@
 import msgpack
 
-from .PickleRedisSessionInterface import RedisSessionInterface
+from . import RedisSessionInterface
 
 
 class MsgpackRedisSessionInterface(RedisSessionInterface):

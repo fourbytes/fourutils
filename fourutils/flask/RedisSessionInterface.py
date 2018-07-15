@@ -20,7 +20,7 @@ class RedisSession(CallbackDict, SessionMixin):
         self.modified = False
 
 
-class PickleRedisSessionInterface(SessionInterface):
+class RedisSessionInterface(SessionInterface):
     serializer = pickle
     session_class = RedisSession
 
@@ -44,14 +44,14 @@ class PickleRedisSessionInterface(SessionInterface):
         sid = request.cookies.get(app.session_cookie_name)
         if not sid:
             sid = self.generate_sid()
-            self.log.debug('Opened new session %s', session.sid)
+            self.log.debug('Opened new session %s', sid)
             return self.session_class(sid=sid, new=True)
         val = self.redis.get(self.prefix + sid)
         if val is not None:
             data = self.serializer.loads(val)
-            self.log.debug('Opened existing session %s', session.sid)
+            self.log.debug('Opened existing session %s', sid)
             return self.session_class(data, sid=sid)
-        self.log.debug('Opened new session %s', session.sid)
+        self.log.debug('Opened new session %s', sid)
         return self.session_class(sid=sid, new=True)
 
     def save_session(self, app, session, response):
