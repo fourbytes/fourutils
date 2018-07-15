@@ -1,0 +1,8 @@
+# Python Internal
+__pycache__
+
+# Package Building
+dist/
+build/
+/*.egg-info
+MANIFEST
