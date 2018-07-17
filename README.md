@@ -7,6 +7,26 @@ As this library is focused on my own private projects, it will be pretty opinion
 * Any contributions should loosely follow PEP8 style guides.
 
 ### Some quick docs.
+## fourutils.flask.testing.UserContext
+A small context manager that provides a flask app.test_client while conveniently logging in and out of a specified user.
+
+```python
+from fourutils.flask.testing import UserContext
+from flask_login import current_user
+
+from somewhere.models import User
+
+# Pick a user, any user.
+u = User.query.first()
+
+with UserContext(u) as c:
+    rv = c.get('/')
+    assert rv.status_code == 200
+    
+    # current_user == the user we setup our context with
+    assert current_user == u
+```
+
 ## fourutils.webnotifications.PushPackageBuilder
 I was unable to find a good way of building Apple .pushpackages dynamically in python. This module resizes and caches the required app icon sizes, builds and signs the manifest, then zips the result completely in-memory with no temporary files.
 
