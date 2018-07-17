@@ -23,7 +23,6 @@ setuptools.setup(
         "webnotifications": ["pillow>=5", "pyopenssl"],
         "flask": ["flask>=1.0.0", "redis"],
         "sqlalchemy": ["sqlalchemy", "msgpack"],
-        "marshmallow": ["marshmallow"],
         "ldap": ["ldap3"]
     }
 )
