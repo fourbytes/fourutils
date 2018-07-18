@@ -1,3 +1,3 @@
-from .UserContext import UserContext
+from .UserTestContext import UserTestContext
 
-__all__ = ['UserContext']
+__all__ = ['UserTestContext']

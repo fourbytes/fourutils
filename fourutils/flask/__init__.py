@@ -1,4 +1,6 @@
 from .RedisSessionInterface import RedisSessionInterface
 from .ReverseProxied import ReverseProxied
 
-__all__ = ['ReverseProxied', 'RedisSessionInterface']
+from .testing import UserTestContext
+
+__all__ = ['ReverseProxied', 'RedisSessionInterface', 'UserTestContext']

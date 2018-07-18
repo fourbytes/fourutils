@@ -7,11 +7,11 @@ As this library is focused on my own private projects, it will be pretty opinion
 * Any contributions should loosely follow PEP8 style guides.
 
 ### Some quick docs.
-## fourutils.flask.testing.UserContext
+## fourutils.flask.testing.UserTestContext
 A small context manager that provides a flask app.test_client while conveniently logging in and out of a specified user.
 
 ```python
-from fourutils.flask.testing import UserContext
+from fourutils.flask import UserTestContext
 from flask_login import current_user
 
 from somewhere.models import User

@@ -6,7 +6,7 @@ from flask import Flask, current_app, _request_ctx_stack
 from flask_login import UserMixin, current_user, login_user, logout_user
 
 
-class UserContext(ContextDecorator):
+class UserTestContext(ContextDecorator):
     r"""A context manager that executes a block of code within
     the context of a specific logged in user.
     Can also be used as a decorator."""
