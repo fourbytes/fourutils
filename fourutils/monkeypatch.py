@@ -1,8 +1,8 @@
 def patch_uuid():
     import uuid
 
-    global CustomUUID
-    class CustomUUID(uuid.UUID):
+    global StringCompareUUID
+    class StringCompareUUID(uuid.UUID):
         r"""Monkeypatched UUID class so we can check them directly
         against strings for convenience, shouldn't have any weird
         side-effects."""
@@ -17,6 +17,6 @@ def patch_uuid():
         
         def __hash__(self):
             return hash(self.int)
-    CustomUUID.__name__ = uuid.UUID.__name__
-    uuid.UUID = CustomUUID
-patch_uuid()
+
+    StringCompareUUID.__name__ = uuid.UUID.__name__
+    uuid.UUID = StringCompareUUID

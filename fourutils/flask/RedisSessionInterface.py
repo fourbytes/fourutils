@@ -48,7 +48,10 @@ class RedisSessionInterface(SessionInterface):
             return self.session_class(sid=sid, new=True)
         val = self.redis.get(self.prefix + sid)
         if val is not None:
-            data = self.serializer.loads(val)
+            try:
+                data = self.serializer.loads(val)
+            finally:
+                return self.session_class(sid=sid, new=True)
             self.log.debug('Opened existing session %s', sid)
             return self.session_class(data, sid=sid)
         self.log.debug('Opened new session %s', sid)
