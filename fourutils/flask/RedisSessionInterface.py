@@ -50,10 +50,13 @@ class RedisSessionInterface(SessionInterface):
         if val is not None:
             try:
                 data = self.serializer.loads(val)
-            finally:
+            except:
+                self.log.exception('Failed to deserialize session data \
+                                    for %s, opening new session.', sid)
                 return self.session_class(sid=sid, new=True)
-            self.log.debug('Opened existing session %s', sid)
-            return self.session_class(data, sid=sid)
+            else:
+                self.log.debug('Opened existing session %s', sid)
+                return self.session_class(data, sid=sid)
         self.log.debug('Opened new session %s', sid)
         return self.session_class(sid=sid, new=True)
 
