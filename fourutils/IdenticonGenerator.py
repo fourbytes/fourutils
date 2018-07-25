@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+from icecream import ic
 from math import floor, ceil
 from colorsys import hls_to_rgb
 
@@ -14,10 +14,12 @@ class Rect:
 
 class IdenticonGenerator(object):
     def __init__(self, background=(240, 240, 240, 1.0), margin=0.16,
-                 size=64, saturation=0.7, lightness=0.5, inverted=False):
+                 image_size=64, saturation=0.8, lightness=0.5, inverted=False,
+                 pixels=5):
         self.background = background
         self.margin = margin
-        self.size = size
+        self.pixels = pixels
+        self.image_size = image_size
         self.saturation = saturation
         self.lightness = lightness
         self.inverted = inverted
@@ -37,50 +39,42 @@ class IdenticonGenerator(object):
         return self.get_hash_color(hash)
     
     def get_rectangles(self, hash):
+        cols = ceil(self.pixels / 2)
+
         rectangles = []
-        baseMargin = floor(self.size * self.margin)
-        cell = floor((self.size - (baseMargin * 2)) / 5)
-        margin = floor((self.size - cell * 5) / 2)
+        baseMargin = floor(self.image_size * self.margin)
+        cell = floor((self.image_size - (baseMargin * 2)) / self.pixels)
+        margin = floor((self.image_size - cell * self.pixels) / 2)
         background_str = self.get_rgba_string(*self.get_background(hash))
         foreground_str = self.get_rgba_string(*self.get_foreground(hash))
 
-        # the first 15 characters of the hash control the pixels (even/odd)
-        # they are drawn down the middle first, then mirrored outwards
-        for i in range(15):
+        for i in range(self.pixels * cols):
             if int(hash[i], 16) % 2:
                 # If value is even, skip, this is blank.
                 continue
             
-            if i < 5:
+            if i < self.pixels and self.pixels % 2:
+                # Center column
                 rectangles.append(Rect(
-                    x=2 * cell + margin,
+                    x=(cols - 1) * cell + margin,
                     y=i * cell + margin,
                     width=cell,
                     height=cell
                 ))
-            elif i < 10:
+            else:
+                col = self.pixels * floor(i / self.pixels)
+                distance = cols - (col / self.pixels)
+
+                y = (i - col) * cell + margin
                 rectangles.append(Rect(
-                    x=1 * cell + margin,
-                    y=(i - 5) * cell + margin,
+                    x=((distance - 1) * cell) + margin,
+                    y=y,
                     width=cell,
                     height=cell
                 ))
                 rectangles.append(Rect(
-                    x=3 * cell + margin,
-                    y=(i - 5) * cell + margin,
-                    width=cell,
-                    height=cell
-                ))
-            elif i < 15:
-                rectangles.append(Rect(
-                    x=0 * cell + margin,
-                    y=(i - 10) * cell + margin,
-                    width=cell,
-                    height=cell
-                ))
-                rectangles.append(Rect(
-                    x=4 * cell + margin,
-                    y=(i - 10) * cell + margin,
+                    x=((self.pixels - distance) * cell) + margin,
+                    y=y,
                     width=cell,
                     height=cell
                 ))
@@ -88,13 +82,13 @@ class IdenticonGenerator(object):
         return rectangles
 
     def dump(self, hash):
-        stroke = self.size * 0.005
+        stroke = self.image_size * 0.005
 
         background_str = self.get_rgba_string(*self.get_background(hash))
         foreground_str = self.get_rgba_string(*self.get_foreground(hash))
 
         xml = (f"<svg xmlns='http://www.w3.org/2000/svg'"
-                   f" width='{self.size}' height='{self.size}'"
+                   f" width='{self.image_size}' height='{self.image_size}'"
                    f" style='background-color: {background_str}'>"
                f"<g style='fill: {foreground_str}; stroke: {foreground_str}; stroke-width: {stroke};'>")
         for rect in self.get_rectangles(hash):
