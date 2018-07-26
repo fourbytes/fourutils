@@ -1,5 +1,4 @@
 from contextlib import ContextDecorator
-from icecream import ic
 from unittest.mock import patch
 
 from flask import Flask, current_app, _request_ctx_stack
