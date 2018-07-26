@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from icecream import ic
 from math import floor, ceil
 from colorsys import hls_to_rgb
 
