@@ -1,4 +1,4 @@
-import logging
+from logging import WARN, DEBUG
 from enum import Enum
 
 import ldap3
@@ -21,39 +21,38 @@ class AuthLDAPResult(Enum):
 
 
 class AuthLDAP(object):
-    def __init__(self, app, init_config=True):
+    def __init__(self, app, config_obj=None, init_config=True):
         self.app = app
         self.log = make_logger(
-            __name__, level=logging.DEBUG if self.app.debug else logging.WARN)
+            __name__, level=DEBUG if self.app.debug else WARN)
 
         # Sentry integration
         if has_raven and 'sentry' in self.app.extensions:
             sentry = self.app.extensions['sentry']
             self.handle_exception = sentry.captureException
-            self.log.addHandler(SentryHandler(sentry.client, level=logging.WARN))
+            self.log.addHandler(SentryHandler(sentry.client, level=WARN))
         else:
             def log_exception(*args, **kwargs):
                 return self.log.exception('Caught exception: ', *args, **kwargs)
             self.handle_exception = log_exception
 
         if init_config:
-            self.init_config()
+            self.init_config(config_obj=config_obj)
 
-    def init_config(self):
-        self.log.info(f"Initialising LDAP settings")
-        self.use_ldap = self.app.user_config.get('enable_ldap')
+    def init_config(self, config_obj=None):
+        if not config_obj:
+            config_obj = self.app.config
+        self.log.info(f"Initialising LDAP settings from <{config_obj.__module__}.{type(config_obj).__name__}>")
+        self.use_ldap = config_obj.get('ENABLE_LDAP')
         if self.use_ldap:
-            ldap_host = self.app.user_config.get('ldap_host')
-            ldap_port = self.app.user_config.get('ldap_port')
+            ldap_host = config_obj.get('LDAP_HOST')
+            ldap_port = config_obj.get('LDAP_PORT')
+            self.base_dn = config_obj.get('LDAP_BASE_DN')
+            self.id_attribute = config_obj.get('LDAP_USER_LOGIN_ATTR')
 
             if ldap_host and ldap_port:
-                self._pool = ServerPool(
-                    [Server('{}:{}'.format(ldap_host, ldap_port),
-                            get_info=ldap3.ALL)],
-                    ldap3.FIRST,
-                    active=True,
-                    exhaust=10,
-                )
+                self._server = Server('{}:{}'.format(ldap_host, ldap_port),
+                                      get_info=ldap3.ALL)
 
             self.log.info(f"Using LDAP server: {ldap_host}:{ldap_port}")
         else:
@@ -63,16 +62,11 @@ class AuthLDAP(object):
         # Using a bound connection, we will go fetch some LDAP attributes
         # for the user that logged in.
         connection.search(
-            search_base=self.app.user_config.get('ldap_base_dn'),
+            search_base=self.base_dn,
             search_filter='({}={})'.format(
-                self.app.user_config.get('ldap_user_login_attr'), username),
+                self.id_attribute, username),
             search_scope=ldap3.SUBTREE,
             attributes=[ldap3.ALL_ATTRIBUTES, ldap3.ALL_OPERATIONAL_ATTRIBUTES]
-            # attributes=[self.app.user_config.get('ldap_user_login_attr'),
-            #             self.app.user_config.get('ldap_user_id_attr'),
-            #             'cn', 'sn', 'memberOf', 'mail', 'givenName',
-            #             'detAttribute12', 'userPrincipalName', 'title',
-            #             'personalTitle', 'mailNickname', 'detAttribute1']
         )
 
         filtered_response = [x for x in connection.response if 'dn' in x]
@@ -92,7 +86,7 @@ class AuthLDAP(object):
             return AuthLDAPResult.AUTH_FAILED, None
 
         connection = Connection(
-            self._pool,
+            self._server,
             user=f'detnsw\\{username}',
             password=password,
             authentication=ldap3.NTLM,
@@ -101,7 +95,7 @@ class AuthLDAP(object):
             client_strategy=ldap3.RESTARTABLE
         )
 
-        num_retries = self.app.config.get('LDAP_NUM_RETRY', 2)
+        num_retries = self.app.config.get('LDAP_NUM_RETRY', 3)
         for try_num in range(0, num_retries):
             try:
                 connection.bind()
@@ -112,17 +106,13 @@ class AuthLDAP(object):
                 self.log.debug(
                     f"Authentication failed for user {repr(username)}")
                 return AuthLDAPResult.AUTH_FAILED, None
-            except (ldap3.core.exceptions.LDAPSocketOpenError,
-                    ldap3.core.exceptions.LDAPServerPoolExhaustedError,
-                    ldap3.core.exceptions.LDAPSocketReceiveError,
+            except ldap3.core.exceptions.LDAPCommunicationError as e:
+                self.handle_exception(
+                    f"Authentication failed due to LDAPCommunicationError: {connection.last_error}")
+            except (ldap3.core.exceptions.LDAPServerPoolExhaustedError,
                     ldap3.core.exceptions.LDAPMaximumRetriesError) as e:
-                self.log.error(
-                    f"Authentication failed due to bad connection to LDAP server: {str(e)}")
-                self.handle_exception()
-            except ldap3.core.exceptions.LDAPSocketSendError as e:
-                self.log.error(
-                    f"Authentication failed due to LDAPSocketSendError: {connection.last_error}")
-                self.handle_exception()
+                self.handle_exception(
+                    f"Authentication failed due to bad connection to LDAP server: {e}")
             else:
                 # Successfully authenticated.
                 if user_data:
@@ -147,7 +137,7 @@ class AuthLDAP(object):
         if not self.use_ldap:
             return False
 
-        connection = Connection(self._pool, raise_exceptions=True, read_only=True)
+        connection = Connection(self._server, raise_exceptions=True, read_only=True)
         try:
             connection.bind()
         except ldap3.core.exceptions.LDAPSocketOpenError:
