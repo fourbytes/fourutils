@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="fourUtils",
-    version="0.0.1",
+    name="fourutils",
+    version="0.0.2",
     author="Oscar Rainford",
     author_email="oscar@fourbytes.me",
     description="A compilation of utilities that I use for a number of personal projects.",
@@ -13,6 +13,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/fourbytes/fourutils",
     packages=setuptools.find_packages(),
+    install_requires=[
+        "sentry_sdk",
+    ],
     classifiers=[
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",

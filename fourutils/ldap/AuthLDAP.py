@@ -3,14 +3,9 @@ from enum import Enum
 
 import ldap3
 from ldap3 import Connection, Server, ServerPool
+from sentry_sdk import add_breadcrumb
 
 from ..log import make_logger
-
-try:
-    from raven.handlers.logging import SentryHandler
-    has_raven = True
-except ImportError:
-    has_raven = False
 
 
 class AuthLDAPResult(Enum):
@@ -26,15 +21,9 @@ class AuthLDAP(object):
         self.log = make_logger(
             __name__, level=DEBUG if self.app.debug else WARN)
 
-        # Sentry integration
-        if has_raven and 'sentry' in self.app.extensions:
-            sentry = self.app.extensions['sentry']
-            self.handle_exception = sentry.captureException
-            self.log.addHandler(SentryHandler(sentry.client, level=WARN))
-        else:
-            def log_exception(*args, **kwargs):
-                return self.log.exception('Caught exception: ', *args, **kwargs)
-            self.handle_exception = log_exception
+        def log_exception(*args, **kwargs):
+            return self.log.exception('Caught exception: ', *args, **kwargs)
+        self.handle_exception = log_exception
 
         if init_config:
             self.init_config(config_obj=config_obj)
@@ -67,6 +56,12 @@ class AuthLDAP(object):
                 self.id_attribute, username),
             search_scope=ldap3.SUBTREE,
             attributes=[ldap3.ALL_ATTRIBUTES, ldap3.ALL_OPERATIONAL_ATTRIBUTES]
+        )
+
+        add_breadcrumb(
+            category='ldap_auth',
+            data=connection.response,
+            level='debug',
         )
 
         filtered_response = [x for x in connection.response if 'dn' in x]

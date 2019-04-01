@@ -69,7 +69,6 @@ class PushPackageBuilder(object):
         zf.writestr('signature', self.sign_manifest(manifest_data))
 
     def build_pushpackage(self, output_file=None, merge_website_dict={}):
-        start_time = time.time()
         output_file = output_file or BytesIO()
 
         with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as zf:
@@ -78,9 +77,7 @@ class PushPackageBuilder(object):
                 **self.website_dict,
                 **merge_website_dict
             })
-
-        took = time.time() - start_time
-        self.log.debug('Took %sms', round(took*1000))
+        output_file.seek(0)
 
         return output_file
 
