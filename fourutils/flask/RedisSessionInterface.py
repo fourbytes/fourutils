@@ -74,9 +74,7 @@ class RedisSessionInterface(SessionInterface):
 
         key = self.prefix + session.sid
         val = self.serializer.dumps(dict(session))
-        print(key)
-        print(val)
-        print(int(redis_exp.total_seconds()))
+
         self.redis.setex(name=key, value=val, time=int(redis_exp.total_seconds()))
 
         response.set_cookie(app.session_cookie_name, session.sid,
