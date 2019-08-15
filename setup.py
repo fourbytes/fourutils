@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="fourutils",
-    version="0.0.2",
+    version="0.0.3",
     author="Oscar Rainford",
     author_email="oscar@fourbytes.me",
     description="A compilation of utilities that I use for a number of personal projects.",

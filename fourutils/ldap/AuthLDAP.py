@@ -1,4 +1,4 @@
-from logging import WARN, DEBUG
+from logging import WARN, DEBUG, INFO
 from enum import Enum
 
 import ldap3
@@ -19,10 +19,10 @@ class AuthLDAP(object):
     def __init__(self, app, config_obj=None, init_config=True):
         self.app = app
         self.log = make_logger(
-            __name__, level=DEBUG if self.app.debug else WARN)
+            __name__, level=DEBUG if self.app.debug else INFO)
 
-        def log_exception(*args, **kwargs):
-            return self.log.exception('Caught exception: ', *args, **kwargs)
+        def log_exception(txt, **kwargs):
+            return self.log.error(txt, exc_info=True, **kwargs)
         self.handle_exception = log_exception
 
         if init_config:
@@ -91,14 +91,14 @@ class AuthLDAP(object):
         )
 
         num_retries = self.app.config.get('LDAP_NUM_RETRY', 3)
-        for try_num in range(0, num_retries):
+        for _ in range(0, num_retries):
             try:
                 connection.bind()
                 user_data = self.get_user_info(username, connection)
                 self.log.debug(
                     f"Authentication succeeded for user {repr(username)}")
             except ldap3.core.exceptions.LDAPInvalidCredentialsResult:
-                self.log.debug(
+                self.log.info(
                     f"Authentication failed for user {repr(username)}")
                 return AuthLDAPResult.AUTH_FAILED, None
             except ldap3.core.exceptions.LDAPCommunicationError as e:
@@ -114,14 +114,14 @@ class AuthLDAP(object):
                     return AuthLDAPResult.SUCCESS, user_data
 
                 self.log.exception(
-                    f"We should not have gotten here. user_data is None. {user_data}")
+                    f"We should not have gotten here. user_data is invalid ({user_data}), check your search dn?")
                 break
             finally:
                 try:
                     connection.sasl_in_progress = False
                     connection.unbind()
                 except:  # noqa
-                    self.handle_exception()
+                    self.handle_exception("Unknown exception.")
 
         self.log.exception(
             f"We should not have gotten here either. Failed after {num_retries} retries.")
