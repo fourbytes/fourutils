@@ -103,7 +103,7 @@ class UserConfigManager(object):
         if kv:
             self.session.delete(kv)
             self.session.commit()
-        del self.cache[key]
+        self.cache.pop(key, None)
         self.log.debug(f'Reset db_config key ({key}).')
 
     # Encode the value before inserting into the db.
