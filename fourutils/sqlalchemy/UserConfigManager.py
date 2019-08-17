@@ -9,9 +9,8 @@ from sqlalchemy.exc import SQLAlchemyError, ProgrammingError
 from ..log import make_logger
 
 try:
-    from flask import request, has_app_context
+    from flask import has_app_context
 except ImportError:
-    request = None
     def has_app_context():
         return False
 
@@ -37,17 +36,16 @@ class UserConfigManager(object):
         self.session = session
         self.defaults = defaults
         self.strict = strict
+        self.cache = {}
 
         self.log = make_logger(__name__)
     
     @teardown_db
     def get(self, key):
         key = key.lower()
-        if request:
-            if not hasattr(request, 'user_config_cache'):
-                request.user_config_cache = {}
-            if key in request.user_config_cache:
-                return request.user_config_cache[key]
+        if key in self.cache:
+            self.log.debug(f"Loaded db_config key from cache: {key}={self.cache[key]}")
+            return self.cache[key]
 
         kv: Optional[self.kv_model] = None
         try:
@@ -58,20 +56,19 @@ class UserConfigManager(object):
         if kv:
             # Key was found in db, good to go.
             cv = self.decode(kv.value)
-            if request:
-                request.user_config_cache[key] = cv
+            self.cache[key] = cv
             return cv
 
         # Key isn't in db, check defaults.
         if key in self.defaults:
-            # self.log.debug(f"Loaded default {key}: {self.defaults[key]}")
+            self.log.debug(f"Loaded db_config key from defaults: {key}={self.defaults[key]}")
             # Got a default, return it.
             return self.defaults[key]
         elif self.strict:
             # Item wasn't previously set and doesn't have a default.
             raise KeyError
         else:
-            self.log.error(f"Tried to load missing key: {key}")
+            self.log.error(f"Tried to load missing db_config key: {key}")
             return None
 
     @teardown_db
@@ -82,19 +79,22 @@ class UserConfigManager(object):
             kv = self.kv_model(key=key)
             self.session.add(kv)
 
-        self.log.debug(f'Setting {key}: {value}')
         kv.value = self.encode(value)
         self.session.commit()
+
+        self.log.debug(f'Wrote db_config key to database: {key}={value}')
+        self.cache[kv.key] = kv.value
 
         return kv.value
 
     # Return a dict of all settings, including defaults.
     @teardown_db
     def get_all(self):
-        return {**self.defaults, **{
+        self.cache = {
             r.key: self.decode(r.value)
             for r in self.kv_model.query.all()
-        }}
+        }
+        return {**self.defaults, **self.cache}
 
     # Remove the key from the db, effectively resetting to the default value.
     @teardown_db
@@ -103,6 +103,8 @@ class UserConfigManager(object):
         if kv:
             self.session.delete(kv)
             self.session.commit()
+        del self.cache[key]
+        self.log.debug(f'Reset db_config key ({key}).')
 
     # Encode the value before inserting into the db.
     def encode(self, value):
