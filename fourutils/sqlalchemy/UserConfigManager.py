@@ -83,7 +83,7 @@ class UserConfigManager(object):
         self.session.commit()
 
         self.log.debug(f'Wrote db_config key to database: {key}={value}')
-        self.cache[kv.key] = kv.value
+        self.cache[kv.key] = value
 
         return kv.value
 
