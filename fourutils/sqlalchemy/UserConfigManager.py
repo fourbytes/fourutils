@@ -2,7 +2,6 @@ import logging
 from typing import Optional
 from functools import wraps
 
-import termcolor
 import msgpack
 from sqlalchemy.exc import SQLAlchemyError, ProgrammingError
 
