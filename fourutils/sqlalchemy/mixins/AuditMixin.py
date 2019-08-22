@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declared_attr
-from flask_security import current_user
+from flask_login import current_user
 
 
 class AuditMixin(object):
