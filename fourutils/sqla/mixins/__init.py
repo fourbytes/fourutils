@@ -1,3 +1,3 @@
-from .AuditMixin import AuditMixin
+from .audit import AuditMixin
 
 __all__ = ["AuditMixin"]
