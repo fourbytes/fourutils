@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fourutils"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Oscar Rainford <oscar@fourbs.com.au>"]
 license = "GPL-3.0"
@@ -10,6 +10,7 @@ python = "^3.7"
 sentry-sdk = "^0.11.1"
 
 [tool.poetry.dev-dependencies]
+sphinx = "*"
 
 [tool.poetry.extras]
 webnotifications = ["pillow>=5", "pyopenssl"]

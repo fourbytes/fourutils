@@ -1,0 +1,134 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+AUTH_FAILED	../fourutils/ldap/AuthLDAP.py	/^    AUTH_FAILED = 2$/;"	kind:variable	line:13
+AuditMixin	../fourutils/sqla/mixins/AuditMixin.py	/^class AuditMixin(object):$/;"	kind:class	line:8
+AuditMixin.py	../fourutils/sqla/mixins/AuditMixin.py	1;"	kind:file	line:1
+AuthLDAP	../fourutils/ldap/AuthLDAP.py	/^class AuthLDAP(object):$/;"	kind:class	line:18
+AuthLDAP.py	../fourutils/ldap/AuthLDAP.py	1;"	kind:file	line:1
+AuthLDAPResult	../fourutils/ldap/AuthLDAP.py	/^class AuthLDAPResult(Enum):$/;"	kind:class	line:11
+BIND_USER_AUTH_FAILED	../fourutils/ldap/AuthLDAP.py	/^    BIND_USER_AUTH_FAILED = 4$/;"	kind:variable	line:15
+CONNECTION_FAILED_UNKNOWN	../fourutils/ldap/AuthLDAP.py	/^    CONNECTION_FAILED_UNKNOWN = 1$/;"	kind:variable	line:12
+FilterParser	../fourutils/FilterParser.py	/^class FilterParser(object):$/;"	kind:class	line:5
+FilterParser.py	../fourutils/FilterParser.py	1;"	kind:file	line:1
+IdenticonGenerator	../fourutils/IdenticonGenerator.py	/^class IdenticonGenerator(object):$/;"	kind:class	line:14
+IdenticonGenerator.py	../fourutils/IdenticonGenerator.py	1;"	kind:file	line:1
+JSONEncodable	../fourutils/sqla/types/JSONEncodedDict.py	/^JSONEncodable = Union[dict, list, str]$/;"	kind:variable	line:7
+JSONEncodedDict	../fourutils/sqla/types/JSONEncodedDict.py	/^class JSONEncodedDict(TypeDecorator):$/;"	kind:class	line:10
+JSONEncodedDict.py	../fourutils/sqla/types/JSONEncodedDict.py	1;"	kind:file	line:1
+MsgpackRedisSessionInterface	../fourutils/flask/msgpack.py	/^class MsgpackRedisSessionInterface(RedisSessionInterface):$/;"	kind:class	line:6
+Periodic	../fourutils/asynchronous/Periodic.py	/^class Periodic:$/;"	kind:class	line:5
+Periodic.py	../fourutils/asynchronous/Periodic.py	1;"	kind:file	line:1
+PushPackageBuilder	../fourutils/webnotifications/PushPackageBuilder.py	/^class PushPackageBuilder(object):$/;"	kind:class	line:15
+PushPackageBuilder.py	../fourutils/webnotifications/PushPackageBuilder.py	1;"	kind:file	line:1
+Rect	../fourutils/IdenticonGenerator.py	/^class Rect:$/;"	kind:class	line:7
+RedisSession	../fourutils/flask/RedisSessionInterface.py	/^class RedisSession(CallbackDict, SessionMixin):$/;"	kind:class	line:12
+RedisSessionInterface	../fourutils/flask/RedisSessionInterface.py	/^class RedisSessionInterface(SessionInterface):$/;"	kind:class	line:23
+RedisSessionInterface.py	../fourutils/flask/RedisSessionInterface.py	1;"	kind:file	line:1
+ReverseProxied	../fourutils/flask/ReverseProxied.py	/^class ReverseProxied(object):$/;"	kind:class	line:1
+ReverseProxied.py	../fourutils/flask/ReverseProxied.py	1;"	kind:file	line:1
+SUCCESS	../fourutils/ldap/AuthLDAP.py	/^    SUCCESS = 3$/;"	kind:variable	line:14
+ServerSentEvent	../fourutils/ServerSentEvent.py	/^class ServerSentEvent(object):$/;"	kind:class	line:4
+ServerSentEvent.py	../fourutils/ServerSentEvent.py	1;"	kind:file	line:1
+StringCompareUUID	../fourutils/monkeypatch.py	/^    class StringCompareUUID(uuid.UUID):$/;"	kind:class	line:5
+UserConfigManager	../fourutils/sqla/UserConfigManager.py	/^class UserConfigManager(object):$/;"	kind:class	line:32
+UserConfigManager.py	../fourutils/sqla/UserConfigManager.py	1;"	kind:file	line:1
+UserTestContext	../fourutils/flask/testing/UserTestContext.py	/^class UserTestContext(ContextDecorator):$/;"	kind:class	line:8
+UserTestContext.py	../fourutils/flask/testing/UserTestContext.py	1;"	kind:file	line:1
+__all__	../fourutils/__init__.py	/^__all__ = ['ServerSentEvent', 'FilterParser', 'base36encode',$/;"	kind:variable	line:8
+__all__	../fourutils/asynchronous/__init__.py	/^__all__ = ('Periodic',)/;"	kind:variable	line:3
+__all__	../fourutils/flask/__init__.py	/^__all__ = ['ReverseProxied', 'load_config_cls']$/;"	kind:variable	line:15
+__all__	../fourutils/flask/testing/__init__.py	/^__all__ = ['UserTestContext']/;"	kind:variable	line:3
+__all__	../fourutils/ldap/__init__.py	/^__all__ = ['AuthLDAP', 'AuthLDAPResult']/;"	kind:variable	line:3
+__all__	../fourutils/sqla/__init__.py	/^__all__ = ['UserConfigManager']/;"	kind:variable	line:3
+__all__	../fourutils/sqla/mixins/__init.py	/^__all__ = ["AuditMixin"]$/;"	kind:variable	line:3
+__all__	../fourutils/sqla/types/__init__.py	/^__all__ = ['JSONEncodedDict']/;"	kind:variable	line:3
+__all__	../fourutils/webnotifications/__init__.py	/^__all__ = ['PushPackageBuilder']/;"	kind:variable	line:3
+__call__	../fourutils/flask/ReverseProxied.py	/^    def __call__(self, environ, start_response):$/;"	kind:member	line:23
+__enter__	../fourutils/flask/testing/UserTestContext.py	/^    def __enter__(self):$/;"	kind:member	line:18
+__eq__	../fourutils/monkeypatch.py	/^        def __eq__(self, obj):$/;"	kind:member	line:10
+__exit__	../fourutils/flask/testing/UserTestContext.py	/^    def __exit__(self, exc_type, exc_value, tb):$/;"	kind:member	line:30
+__hash__	../fourutils/monkeypatch.py	/^        def __hash__(self):$/;"	kind:member	line:18
+__init.py	../fourutils/sqla/mixins/__init.py	1;"	kind:file	line:1
+__init__	../fourutils/IdenticonGenerator.py	/^    def __init__(self, background=(240, 240, 240, 1.0), margin=0.16,$/;"	kind:member	line:15
+__init__	../fourutils/ServerSentEvent.py	/^    def __init__(self, data):$/;"	kind:member	line:6
+__init__	../fourutils/asynchronous/Periodic.py	/^    def __init__(self, func, time):$/;"	kind:member	line:6
+__init__	../fourutils/flask/RedisSessionInterface.py	/^    def __init__(self, initial=None, sid=None, new=False):$/;"	kind:member	line:14
+__init__	../fourutils/flask/RedisSessionInterface.py	/^    def __init__(self, redis=None, prefix='session:'):$/;"	kind:member	line:27
+__init__	../fourutils/flask/ReverseProxied.py	/^    def __init__(self, app):$/;"	kind:member	line:20
+__init__	../fourutils/flask/testing/UserTestContext.py	/^    def __init__(self, user: UserMixin, app: Flask = False):$/;"	kind:member	line:13
+__init__	../fourutils/ldap/AuthLDAP.py	/^    def __init__(self, app, config_obj=None, init_config=True):$/;"	kind:member	line:19
+__init__	../fourutils/sqla/UserConfigManager.py	/^    def __init__(self, session, kv_model, defaults={}, strict=True):$/;"	kind:member	line:33
+__init__	../fourutils/webnotifications/PushPackageBuilder.py	/^    def __init__(self, icon_path, website_dict, key_path, key_password=None):$/;"	kind:member	line:17
+__init__.py	../fourutils/__init__.py	1;"	kind:file	line:1
+__init__.py	../fourutils/asynchronous/__init__.py	1;"	kind:file	line:1
+__init__.py	../fourutils/flask/__init__.py	1;"	kind:file	line:1
+__init__.py	../fourutils/flask/testing/__init__.py	1;"	kind:file	line:1
+__init__.py	../fourutils/ldap/__init__.py	1;"	kind:file	line:1
+__init__.py	../fourutils/sqla/__init__.py	1;"	kind:file	line:1
+__init__.py	../fourutils/sqla/types/__init__.py	1;"	kind:file	line:1
+__init__.py	../fourutils/webnotifications/__init__.py	1;"	kind:file	line:1
+_current_user_id_or_none	../fourutils/sqla/mixins/AuditMixin.py	/^def _current_user_id_or_none():$/;"	kind:function	line:46
+_run	../fourutils/asynchronous/Periodic.py	/^    async def _run(self):$/;"	kind:member	line:26
+authenticate	../fourutils/ldap/AuthLDAP.py	/^    def authenticate(self, username, password):$/;"	kind:member	line:79
+base36.py	../fourutils/base36.py	1;"	kind:file	line:1
+base36decode	../fourutils/base36.py	/^def base36decode(number):$/;"	kind:function	line:23
+base36encode	../fourutils/base36.py	/^def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):$/;"	kind:function	line:1
+build_images	../fourutils/webnotifications/PushPackageBuilder.py	/^    def build_images(self, image_src, force=False):$/;"	kind:member	line:33
+build_pushpackage	../fourutils/webnotifications/PushPackageBuilder.py	/^    def build_pushpackage(self, output_file=None, merge_website_dict={}):$/;"	kind:member	line:71
+build_zip	../fourutils/webnotifications/PushPackageBuilder.py	/^    def build_zip(self, zf, website_dict):$/;"	kind:member	line:54
+clear_filters	../fourutils/FilterParser.py	/^    def clear_filters(self, query_str: str) -> str:$/;"	kind:member	line:19
+connection_established	../fourutils/ldap/AuthLDAP.py	/^    def connection_established(self):$/;"	kind:member	line:131
+created_at	../fourutils/sqla/mixins/AuditMixin.py	/^    created_at = Column(DateTime, default=datetime.now)$/;"	kind:variable	line:9
+created_by	../fourutils/sqla/mixins/AuditMixin.py	/^    def created_by(cls):$/;"	kind:member	line:21
+created_by_id	../fourutils/sqla/mixins/AuditMixin.py	/^    def created_by_id(cls):$/;"	kind:member	line:13
+decode	../fourutils/sqla/UserConfigManager.py	/^    def decode(self, value):$/;"	kind:member	line:113
+dump	../fourutils/IdenticonGenerator.py	/^    def dump(self, hash):$/;"	kind:member	line:83
+encode	../fourutils/ServerSentEvent.py	/^    def encode(self):$/;"	kind:member	line:18
+encode	../fourutils/sqla/UserConfigManager.py	/^    def encode(self, value):$/;"	kind:member	line:109
+expression	../fourutils/FilterParser.py	/^    expression = re.compile(r'(?:([\\w\\d]+):(?:"(.+)"|((?!")\\S+)))')$/;"	kind:variable	line:6
+generate_sid	../fourutils/flask/RedisSessionInterface.py	/^    def generate_sid(self):$/;"	kind:member	line:35
+get	../fourutils/sqla/UserConfigManager.py	/^    def get(self, key):$/;"	kind:member	line:43
+get_all	../fourutils/sqla/UserConfigManager.py	/^    def get_all(self):$/;"	kind:member	line:91
+get_background	../fourutils/IdenticonGenerator.py	/^    def get_background(self, hash):$/;"	kind:member	line:30
+get_foreground	../fourutils/IdenticonGenerator.py	/^    def get_foreground(self, hash):$/;"	kind:member	line:35
+get_hash_color	../fourutils/IdenticonGenerator.py	/^    def get_hash_color(self, hash):$/;"	kind:member	line:26
+get_hash_details	../fourutils/webnotifications/PushPackageBuilder.py	/^    def get_hash_details(self, data=None, sha_hash=None):$/;"	kind:member	line:27
+get_rectangles	../fourutils/IdenticonGenerator.py	/^    def get_rectangles(self, hash):$/;"	kind:member	line:40
+get_redis_expiration_time	../fourutils/flask/RedisSessionInterface.py	/^    def get_redis_expiration_time(self, app, session):$/;"	kind:member	line:38
+get_rgba_string	../fourutils/IdenticonGenerator.py	/^    def get_rgba_string(cls, red, green, blue, alpha=1.0):$/;"	kind:member	line:103
+get_user_info	../fourutils/ldap/AuthLDAP.py	/^    def get_user_info(self, username, connection):$/;"	kind:member	line:50
+has_app_context	../fourutils/sqla/UserConfigManager.py	/^    def has_app_context():$/;"	kind:function	line:13
+impl	../fourutils/sqla/types/JSONEncodedDict.py	/^    impl = Text$/;"	kind:variable	line:13
+init_config	../fourutils/ldap/AuthLDAP.py	/^    def init_config(self, config_obj=None):$/;"	kind:member	line:31
+load_config_cls	../fourutils/flask/__init__.py	/^def load_config_cls(config_module, *args, **kwargs):$/;"	kind:function	line:7
+log.py	../fourutils/log.py	1;"	kind:file	line:1
+log_exception	../fourutils/ldap/AuthLDAP.py	/^        def log_exception(txt, **kwargs):$/;"	kind:function	line:24
+make_logger	../fourutils/log.py	/^def make_logger(name=None, level=None):$/;"	kind:function	line:4
+match	../fourutils/FilterParser.py	/^    def match(self, key: str, query_str: str) -> Optional[Tuple[str, str]]:$/;"	kind:member	line:8
+match_all	../fourutils/FilterParser.py	/^    def match_all(self, query_str: str) -> Iterator[Tuple[str, str]]:$/;"	kind:member	line:14
+monkeypatch.py	../fourutils/monkeypatch.py	1;"	kind:file	line:1
+msgpack.py	../fourutils/flask/msgpack.py	1;"	kind:file	line:1
+on_update	../fourutils/flask/RedisSessionInterface.py	/^        def on_update(self):$/;"	kind:function	line:15
+open_session	../fourutils/flask/RedisSessionInterface.py	/^    def open_session(self, app, request):$/;"	kind:member	line:43
+patch_uuid	../fourutils/monkeypatch.py	/^def patch_uuid():$/;"	kind:function	line:1
+process_bind_param	../fourutils/sqla/types/JSONEncodedDict.py	/^    def process_bind_param(self, value: JSONEncodable, dialect) -> str:$/;"	kind:member	line:15
+process_result_value	../fourutils/sqla/types/JSONEncodedDict.py	/^    def process_result_value(self, value: str, dialect) -> JSONEncodable:$/;"	kind:member	line:20
+reset	../fourutils/sqla/UserConfigManager.py	/^    def reset(self, key):$/;"	kind:member	line:100
+save_session	../fourutils/flask/RedisSessionInterface.py	/^    def save_session(self, app, session, response):$/;"	kind:member	line:63
+serializer	../fourutils/flask/RedisSessionInterface.py	/^    serializer = pickle$/;"	kind:variable	line:24
+serializer	../fourutils/flask/msgpack.py	/^    serializer = msgpack/;"	kind:variable	line:7
+session_class	../fourutils/flask/RedisSessionInterface.py	/^    session_class = RedisSession$/;"	kind:variable	line:25
+set	../fourutils/sqla/UserConfigManager.py	/^    def set(self, key, value):$/;"	kind:member	line:74
+sign_manifest	../fourutils/webnotifications/PushPackageBuilder.py	/^    def sign_manifest(self, manifest_data):$/;"	kind:member	line:84
+start	../fourutils/asynchronous/Periodic.py	/^    async def start(self):$/;"	kind:member	line:12
+stop	../fourutils/asynchronous/Periodic.py	/^    async def stop(self):$/;"	kind:member	line:18
+teardown_db	../fourutils/sqla/UserConfigManager.py	/^def teardown_db(f):$/;"	kind:function	line:17
+updated_at	../fourutils/sqla/mixins/AuditMixin.py	/^    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)$/;"	kind:variable	line:10
+updated_by	../fourutils/sqla/mixins/AuditMixin.py	/^    def updated_by(cls):$/;"	kind:member	line:38
+updated_by_id	../fourutils/sqla/mixins/AuditMixin.py	/^    def updated_by_id(cls):$/;"	kind:member	line:29
+wrapper	../fourutils/sqla/UserConfigManager.py	/^    def wrapper(self, *args, **kwds):$/;"	kind:function	line:19
