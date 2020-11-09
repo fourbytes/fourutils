@@ -43,7 +43,7 @@ class UserConfigManager(object):
     def get(self, key):
         key = key.lower()
         if key in self.cache:
-            self.log.debug(f"Loaded db_config key from cache: {key}={self.cache[key]}")
+            # self.log.debug(f"Loaded db_config key from cache: {key}={self.cache[key]}")
             return self.cache[key]
 
         kv: Optional[self.kv_model] = None
@@ -60,7 +60,7 @@ class UserConfigManager(object):
 
         # Key isn't in db, check defaults.
         if key in self.defaults:
-            self.log.debug(f"Loaded db_config key from defaults: {key}={self.defaults[key]}")
+            # self.log.debug(f"Loaded db_config key from defaults: {key}={self.defaults[key]}")
             # Got a default, return it.
             return self.defaults[key]
         elif self.strict:
@@ -103,7 +103,7 @@ class UserConfigManager(object):
             self.session.delete(kv)
             self.session.commit()
         self.cache.pop(key, None)
-        self.log.debug(f'Reset db_config key ({key}).')
+        # self.log.debug(f'Reset db_config key ({key}).')
 
     # Encode the value before inserting into the db.
     def encode(self, value):
