@@ -44,7 +44,7 @@ class RedisSessionInterface(SessionInterface):
         sid = request.cookies.get(app.session_cookie_name)
         if not sid:
             sid = self.generate_sid()
-            self.log.debug('Opened new session %s', sid)
+            # self.log.debug('Opened new session %s', sid)
             return self.session_class(sid=sid, new=True)
         val = self.redis.get(self.prefix + sid)
         if val is not None:
@@ -55,9 +55,9 @@ class RedisSessionInterface(SessionInterface):
                                     for %s, opening new session.', sid)
                 return self.session_class(sid=sid, new=True)
             else:
-                self.log.debug('Opened existing session %s', sid)
+                # self.log.debug('Opened existing session %s', sid)
                 return self.session_class(data, sid=sid)
-        self.log.debug('Opened new session %s', sid)
+        # self.log.debug('Opened new session %s', sid)
         return self.session_class(sid=sid, new=True)
 
     def save_session(self, app, session, response):
@@ -80,4 +80,4 @@ class RedisSessionInterface(SessionInterface):
         response.set_cookie(app.session_cookie_name, session.sid,
                             expires=cookie_exp, httponly=True,
                             domain=domain)
-        self.log.debug('Saved session %s', session.sid)
+        # self.log.debug('Saved session %s', session.sid)
